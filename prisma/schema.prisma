@@ -1,0 +1,61 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Client {
+  rut        String   @id
+  name       String
+  lastname   String
+  email      String
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Nutritionist {
+  rut        String   @id
+  name       String
+  lastname   String
+  email      String
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Admin {
+  email      String   @id
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Certificate {
+  idCertificate String   @id @default(uuid())
+  file          String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+// model Schedule {
+//   idSchedule String   @id @default(uuid())
+//   message    String
+//   date       DateTime
+//   created_at DateTime @default(now())
+//   updated_at DateTime @updatedAt
+// }
+
+model Appointment {
+  idAppointment String   @id @default(uuid())
+  title         String
+  message       String
+  date          DateTime
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+//Ejecutar model yarn prisma migrate dev
