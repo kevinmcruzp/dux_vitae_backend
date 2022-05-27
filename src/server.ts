@@ -1,5 +1,4 @@
-import cors from "cors";
-import express, { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import decode from "jwt-decode";
 import { generateJwtAndRefreshToken } from "./auth";
@@ -10,12 +9,9 @@ import {
   seedUserStore,
   users,
 } from "./database";
+import { app, httpServer } from "./http";
 import { CreateSessionDTO, DecodedToken } from "./types";
-
-const app = express();
-
-app.use(express.json());
-app.use(cors());
+import "./websocket";
 
 //Base de datos local
 seedUserStore();
@@ -191,4 +187,6 @@ app.get("/me", checkAuthMiddleware, (request, response) => {
   });
 });
 
-app.listen(3333);
+httpServer.listen(3333, () => {
+  console.log("Server running on port 3333");
+});
