@@ -3,42 +3,79 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./ERD.svg"
+  theme    = "dark"
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
 model Client {
-  rut        String   @id
+  rut        String    @id
   name       String
   lastname   String
   email      String
   password   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  message    Message[]
+
+  @@map("clients")
 }
 
 model Nutritionist {
-  rut        String   @id
-  name       String
-  lastname   String
-  email      String
-  password   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  rut         String        @id
+  name        String
+  lastname    String
+  email       String
+  password    String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  message     Message[]
+  appointment Appointment[]
+  certificate Certificate?
+
+  @@map("nutritionists")
+}
+
+model Message {
+  idMessage       String       @id @default(cuid())
+  message         String
+  created_at      DateTime     @default(now())
+  nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
+  client          Client       @relation(fields: [clientRut], references: [rut])
+  nutritionistRut String
+  clientRut       String
+
+  @@map("messages")
 }
 
 model Admin {
-  email      String   @id
-  password   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  rut         String        @id
+  email       String
+  password    String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  certificate Certificate[]
+
+  @@map("admins")
 }
 
 model Certificate {
-  idCertificate String   @id @default(uuid())
-  file          String
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  idCertificate   String       @id @default(uuid())
+  file            String
+  state           Boolean
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+  admin           Admin        @relation(fields: [adminRut], references: [rut])
+  adminRut        String
+  nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
+  nutritionistRut String       @unique
+
+  @@map("certificates")
 }
 
 // model Schedule {
@@ -50,12 +87,15 @@ model Certificate {
 // }
 
 model Appointment {
-  idAppointment String   @id @default(uuid())
-  title         String
-  message       String
-  date          DateTime
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  idAppointment   String       @id @default(uuid())
+  title           String
+  message         String
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+  nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
+  nutritionistRut String
+
+  @@map("appointments")
 }
 
 //Ejecutar model yarn prisma migrate dev

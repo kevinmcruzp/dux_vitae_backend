@@ -11,7 +11,7 @@ import {
 } from "./database";
 import { app, httpServer } from "./http";
 import { CreateSessionDTO, DecodedToken } from "./types";
-import "./websocket";
+import "./websocket/websocket";
 
 //Base de datos local
 seedUserStore();
