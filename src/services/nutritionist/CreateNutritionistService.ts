@@ -1,4 +1,4 @@
-import prismaClient from "../prisma";
+import prismaClient from "../../prisma";
 
 type CreateNutritionistaProps = {
   rut: string;
@@ -6,6 +6,7 @@ type CreateNutritionistaProps = {
   lastname: string;
   email: string;
   password: string;
+  role: string;
 };
 
 class CreateNutritionistService {
@@ -15,6 +16,7 @@ class CreateNutritionistService {
     lastname,
     email,
     password,
+    role,
   }: CreateNutritionistaProps) {
     const nutritionist = prismaClient.nutritionist.create({
       data: {
@@ -23,6 +25,7 @@ class CreateNutritionistService {
         lastname,
         email,
         password,
+        role,
       },
     });
 

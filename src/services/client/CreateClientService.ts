@@ -1,4 +1,4 @@
-import prismaClient from "../prisma";
+import prismaClient from "../../prisma";
 
 type CreateClientProps = {
   rut: string;
@@ -6,21 +6,30 @@ type CreateClientProps = {
   lastname: string;
   email: string;
   password: string;
+  role: string;
 };
 
 class CreateClientService {
-  async execute({ rut, name, lastname, email, password }: CreateClientProps) {
-    const user = prismaClient.client.create({
+  async execute({
+    rut,
+    name,
+    lastname,
+    email,
+    password,
+    role,
+  }: CreateClientProps) {
+    const client = prismaClient.client.create({
       data: {
         rut,
         name,
         lastname,
         email,
         password,
+        role,
       },
     });
 
-    return user;
+    return client;
   }
 }
 
