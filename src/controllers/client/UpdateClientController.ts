@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UpdateClientService } from "../../services/client/UpdateClientService";
 
-class UpdateUserController {
+class UpdateClientController {
   async handle(request: Request, response: Response) {
     const { rut } = request.params;
     const { name, lastname, email, password } = request.body;
@@ -19,4 +19,4 @@ class UpdateUserController {
   }
 }
 
-export { UpdateUserController };
+export { UpdateClientController };
