@@ -15,7 +15,7 @@ class UpdateClientController {
       password,
     });
 
-    return response.json(client);
+    return response.status(200).json(client);
   }
 }
 
