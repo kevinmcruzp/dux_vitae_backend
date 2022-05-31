@@ -16,7 +16,7 @@ class CreateNutritionistService {
     lastname,
     email,
     password,
-    role,
+    role = "nutritionist",
   }: CreateNutritionistaProps) {
     const nutritionist = prismaClient.nutritionist.create({
       data: {

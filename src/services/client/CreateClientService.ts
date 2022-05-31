@@ -16,7 +16,7 @@ class CreateClientService {
     lastname,
     email,
     password,
-    role,
+    role = "client",
   }: CreateClientProps) {
     const client = prismaClient.client.create({
       data: {

@@ -47,7 +47,6 @@ model Message {
   idMessage       String       @id @default(cuid())
   message         String
   created_at      DateTime     @default(now())
-  nombre          String
   nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
   client          Client       @relation(fields: [clientRut], references: [rut])
   nutritionistRut String
