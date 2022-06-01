@@ -5,7 +5,7 @@ class UpdateClientController {
   async handle(request: Request, response: Response) {
     const { rut } = request.params;
     const { name, lastname, email, password } = request.body;
-
+    console.log(rut);
     const service = new UpdateClientService();
 
     const client = await service.execute(rut, {
