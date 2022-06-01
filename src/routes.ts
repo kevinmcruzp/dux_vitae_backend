@@ -4,11 +4,14 @@ import { DeleteClientController } from "./controllers/client/DeleteClientControl
 import { ListClientByRutController } from "./controllers/client/ListClientByRutController";
 import { ListClientController } from "./controllers/client/ListClientController";
 import { UpdateClientController } from "./controllers/client/UpdateClientController";
+import { LoginController } from "./controllers/LoginController";
 import { CreateNutritionistController } from "./controllers/nutritionist/CreateNutritionistController";
 import { DeleteNutritionistController } from "./controllers/nutritionist/DeleteNutritionistController";
 import { ListNutritionistByRutController } from "./controllers/nutritionist/ListNutritionistByRutController";
 import { ListNutritionistController } from "./controllers/nutritionist/ListNutritionistController";
 import { UpdateNutritionistController } from "./controllers/nutritionist/UpdateNutritionistController";
+import { RefreshController } from "./controllers/RefreshController";
+import { addUserInformationToRequest } from "./middleware/addUserInformationToRequest";
 
 const router = Router();
 
@@ -25,5 +28,15 @@ router.get("/nutritionists", new ListNutritionistController().handle);
 router.put("/nutritionists/:rut", new UpdateNutritionistController().handle);
 router.delete("/nutritionists/:rut", new DeleteNutritionistController().handle);
 router.get("/nutritionists/:rut", new ListNutritionistByRutController().handle);
+
+//posicionar en controllers
+router.post("/sessions", new LoginController().handle);
+
+//refresh token
+router.post(
+  "/refresh",
+  addUserInformationToRequest,
+  new RefreshController().handle
+);
 
 export { router };

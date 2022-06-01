@@ -25,6 +25,7 @@ export function seedUserStore() {
   });
 }
 
+//Agregar base de datos de refresh token
 export function createRefreshToken(email: string) {
   const currentUserTokens = tokens.get(email) ?? [];
   const refreshToken = uuid();
@@ -34,12 +35,14 @@ export function createRefreshToken(email: string) {
   return refreshToken;
 }
 
+//Areglar el check de refresh token
 export function checkRefreshTokenIsValid(email: string, refreshToken: string) {
   const storedRefreshTokens = tokens.get(email) ?? [];
 
   return storedRefreshTokens.some((token) => token === refreshToken);
 }
 
+//areglar el refresh token invalido
 export function invalidateRefreshToken(email: string, refreshToken: string) {
   const storedRefreshTokens = tokens.get(email) ?? [];
 
