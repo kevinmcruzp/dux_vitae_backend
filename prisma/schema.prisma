@@ -3,6 +3,11 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
 generator erd {
   provider = "prisma-erd-generator"
   output   = "./ERD.svg"
@@ -17,13 +22,14 @@ model Client {
   rut        String    @id
   name       String
   lastname   String
-  email      String
+  email      String    @unique
   password   String
   role       String
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   message    Message[]
 
+  Token Token[]
   @@map("clients")
 }
 
@@ -31,7 +37,7 @@ model Nutritionist {
   rut         String        @id
   name        String
   lastname    String
-  email       String
+  email       String        @unique
   password    String
   role        String
   created_at  DateTime      @default(now())
@@ -40,6 +46,7 @@ model Nutritionist {
   appointment Appointment[]
   certificate Certificate?
 
+  Token Token[]
   @@map("nutritionists")
 }
 
@@ -57,13 +64,14 @@ model Message {
 
 model Admin {
   rut         String        @id
-  email       String
+  email       String        @unique
   password    String
   role        String
   created_at  DateTime      @default(now())
   updated_at  DateTime      @updatedAt
   certificate Certificate[]
 
+  Token Token[]
   @@map("admins")
 }
 
@@ -99,6 +107,20 @@ model Appointment {
   nutritionistRut String
 
   @@map("appointments")
+}
+
+model Token {
+  idToken           String        @id @default(uuid())
+  token             String
+  client            Client?       @relation(fields: [clientEmail], references: [email])
+  clientEmail       String
+  nutritionist      Nutritionist? @relation(fields: [nutritionistEmail], references: [email])
+  nutritionistEmail String
+  admin             Admin?        @relation(fields: [adminEmail], references: [email])
+  adminEmail        String
+
+
+  @@map("tokens")
 }
 
 //Ejecutar model yarn prisma migrate dev
