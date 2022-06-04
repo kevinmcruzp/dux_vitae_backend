@@ -10,7 +10,8 @@ export function checkAuthMiddleware(
   next: NextFunction
 ) {
   const { authorization } = request.headers;
-
+  console.log(authorization, "authorization");
+  console.log("Dentro de checkAuthMiddleware");
   if (!authorization) {
     return response.status(401).json({
       error: true,

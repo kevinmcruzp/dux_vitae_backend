@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { CheckUserController } from "./controllers/CheckUserController";
 import { CreateClientController } from "./controllers/client/CreateClientController";
 import { DeleteClientController } from "./controllers/client/DeleteClientController";
 import { ListClientByRutController } from "./controllers/client/ListClientByRutController";
@@ -12,6 +13,7 @@ import { ListNutritionistController } from "./controllers/nutritionist/ListNutri
 import { UpdateNutritionistController } from "./controllers/nutritionist/UpdateNutritionistController";
 import { RefreshController } from "./controllers/RefreshController";
 import { addUserInformationToRequest } from "./middleware/addUserInformationToRequest";
+import { checkAuthMiddleware } from "./middleware/checkAuthMiddleware";
 
 const router = Router();
 
@@ -38,5 +40,7 @@ router.post(
   addUserInformationToRequest,
   new RefreshController().handle
 );
+
+router.get("/me", checkAuthMiddleware, new CheckUserController().handle);
 
 export { router };

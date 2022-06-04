@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { generateJwtAndRefreshToken } from "../auth";
-import { checkRefreshTokenIsValid, invalidateRefreshToken } from "../database";
 import { RefreshService } from "../services/RefreshService";
+import { checkRefreshTokenIsValid } from "./TokenController";
 
 class RefreshController {
   async handle(request: Request, response: Response) {
+    console.log("dentro de refreshhhh");
     const email = request.user;
     const { refreshToken } = request.body;
 
@@ -25,7 +26,12 @@ class RefreshController {
         .json({ error: true, message: "Refresh token is required." });
     }
 
-    const isValidRefreshToken = checkRefreshTokenIsValid(email, refreshToken);
+    const isValidRefreshToken = await checkRefreshTokenIsValid(
+      email,
+      refreshToken
+    );
+
+    console.log(isValidRefreshToken, "dentro del checkRefreshTokenIsValid");
 
     if (!isValidRefreshToken) {
       return response
@@ -33,14 +39,14 @@ class RefreshController {
         .json({ error: true, message: "Refresh token is invalid." });
     }
 
-    invalidateRefreshToken(email, refreshToken);
-
-    const { token, refreshToken: newRefreshToken } = generateJwtAndRefreshToken(
-      email,
-      {
+    // invalidateRefreshToken(email, refreshToken);
+    console.log("cerca de generate jwt");
+    const { token, refreshToken: newRefreshToken } =
+      await generateJwtAndRefreshToken(email, {
         roles: user.role,
-      }
-    );
+      });
+
+    console.log(token, "token", newRefreshToken, "newRefreshToken");
 
     return response.json({
       token,

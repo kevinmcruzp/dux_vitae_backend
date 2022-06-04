@@ -8,8 +8,6 @@ class LoginController {
     const { email, password } = request.body as CreateSessionDTO;
     const service = new LoginService();
 
-    console.log(email, password);
-
     const user = await service.execute(email, password);
     // const user = users.get(email);
 
@@ -20,7 +18,7 @@ class LoginController {
       });
     }
 
-    const { token, refreshToken } = generateJwtAndRefreshToken(email, {
+    const { token, refreshToken } = await generateJwtAndRefreshToken(email, {
       roles: user.role,
     });
 

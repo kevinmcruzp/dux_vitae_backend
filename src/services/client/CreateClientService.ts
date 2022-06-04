@@ -18,7 +18,7 @@ class CreateClientService {
     password,
     role = "client",
   }: CreateClientProps) {
-    const client = prismaClient.client.create({
+    const client = await prismaClient.client.create({
       data: {
         rut,
         name,

@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { auth } from "./config";
-import { createRefreshToken } from "./database";
+import { createRefreshToken } from "./controllers/TokenController";
 
-export function generateJwtAndRefreshToken(
+export async function generateJwtAndRefreshToken(
   email: string,
   payload: object = {}
 ) {
@@ -11,8 +11,7 @@ export function generateJwtAndRefreshToken(
     expiresIn: 5, // 15 minutes
   });
 
-  const refreshToken = createRefreshToken(email);
-
+  const refreshToken = await createRefreshToken(email);
   return {
     token,
     refreshToken,
