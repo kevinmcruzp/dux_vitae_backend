@@ -2,7 +2,7 @@ import prismaClient from "../../prisma";
 
 type UpdateNutritionistProps = {
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   password: string;
 };
@@ -10,7 +10,7 @@ type UpdateNutritionistProps = {
 class UpdateNutritionistService {
   async execute(
     rut: string,
-    { name, lastname, email, password }: UpdateNutritionistProps
+    { name, lastName, email, password }: UpdateNutritionistProps
   ) {
     const nutritionist = prismaClient.nutritionist.update({
       where: {
@@ -18,7 +18,7 @@ class UpdateNutritionistService {
       },
       data: {
         name,
-        lastname,
+        lastName,
         email,
         password,
       },

@@ -3,7 +3,7 @@ import prismaClient from "../../prisma";
 type CreateClientProps = {
   rut: string;
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   password: string;
   role: string;
@@ -13,7 +13,7 @@ class CreateClientService {
   async execute({
     rut,
     name,
-    lastname,
+    lastName,
     email,
     password,
     role = "client",
@@ -22,7 +22,7 @@ class CreateClientService {
       data: {
         rut,
         name,
-        lastname,
+        lastName,
         email,
         password,
         role,

@@ -22,7 +22,7 @@ model Client {
   rut        String    @id
   email      String    @unique
   name       String
-  lastname   String
+  lastName   String
   password   String
   role       String
   created_at DateTime  @default(now())
@@ -36,7 +36,7 @@ model Nutritionist {
   rut         String        @id
   email       String        @unique
   name        String
-  lastname    String
+  lastName    String
   password    String
   role        String
   created_at  DateTime      @default(now())

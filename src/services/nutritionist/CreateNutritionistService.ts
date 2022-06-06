@@ -1,9 +1,9 @@
 import prismaClient from "../../prisma";
 
-type CreateNutritionistaProps = {
+type CreateNutritionistProps = {
   rut: string;
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   password: string;
   role: string;
@@ -13,16 +13,16 @@ class CreateNutritionistService {
   async execute({
     rut,
     name,
-    lastname,
+    lastName,
     email,
     password,
     role = "nutritionist",
-  }: CreateNutritionistaProps) {
+  }: CreateNutritionistProps) {
     const nutritionist = prismaClient.nutritionist.create({
       data: {
         rut,
         name,
-        lastname,
+        lastName,
         email,
         password,
         role,
