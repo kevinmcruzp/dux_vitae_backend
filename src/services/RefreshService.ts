@@ -20,6 +20,10 @@ class RefreshService {
       },
     });
 
+    if (client !== null) {
+      return client;
+    }
+
     if (admin !== null) {
       return admin;
     }
@@ -28,9 +32,6 @@ class RefreshService {
       return nutritionist;
     }
 
-    if (client !== null) {
-      return client;
-    }
     return null;
   }
 }

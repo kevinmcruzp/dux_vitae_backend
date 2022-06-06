@@ -63,6 +63,8 @@ model Message {
 model Admin {
   rut         String        @id
   email       String        @unique
+  name        String
+  lastName    String
   password    String
   role        String
   created_at  DateTime      @default(now())

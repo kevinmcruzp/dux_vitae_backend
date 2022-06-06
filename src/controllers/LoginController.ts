@@ -23,6 +23,8 @@ class LoginController {
     });
 
     return response.json({
+      name: user.name,
+      lastName: user.lastName,
       token,
       refreshToken,
       roles: user.role,
