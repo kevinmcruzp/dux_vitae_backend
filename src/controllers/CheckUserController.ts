@@ -16,6 +16,8 @@ class CheckUserController {
         .json({ error: true, message: "User not found." });
     }
     return response.json({
+      name: user.name,
+      lastName: user.lastName,
       email,
       roles: user.role,
     });
