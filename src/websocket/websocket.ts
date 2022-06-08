@@ -1,14 +1,65 @@
 import { io } from "../http";
 
-const messages = [];
+type RoomUser = {
+  socket_id: string;
+  name: string;
+  room: string;
+};
+
+type Message = {
+  room: string;
+  name: string;
+  text: string;
+  createdAt: Date;
+};
+
+const users: RoomUser[] = [];
+
+const messages: Message[] = [];
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
+  socket.on("room", (room, name) => {
+    //Para entrar en una sala
+    socket.join(room);
 
-  socket.on("message", (user, message) => {
-    console.log(message);
-    console.log("hola desde mensaje");
+    const userInRoom = users.find(
+      (user) => user.name === name && user.room === room
+    );
 
-    socket.emit("received", user, message);
+    if (userInRoom) {
+      userInRoom.socket_id = socket.id;
+    } else {
+      users.push({
+        socket_id: socket.id,
+        name,
+        room,
+      });
+    }
   });
+
+  socket.on("message", (data) => {
+    //1.- Almacenar mensaje en la base de datos
+
+    //2.- Enviar mensaje a todos los usuarios de la sala
+
+    const message: Message = {
+      room: data.room,
+      name: data.name,
+      text: data.message,
+      createdAt: new Date(),
+    };
+
+    messages.push(message);
+
+    console.log(messages);
+
+    io.to(data.room).emit("message", messages);
+
+    // socket.emit("received", name, message);
+  });
+
+  // //mesanges privados
+  // socket.on("private message", (anotherSocketId, msg) => {
+  //   socket.to(anotherSocketId).emit("private message", socket.id, msg);
+  // });
 });
