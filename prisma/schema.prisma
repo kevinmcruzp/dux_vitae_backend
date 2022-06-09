@@ -95,7 +95,8 @@ model Certificate {
 model Appointment {
   idAppointment   String       @id @default(uuid())
   title           String
-  message         String
+  description     String
+  state           Boolean
   created_at      DateTime     @default(now())
   updated_at      DateTime     @updatedAt
   nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
