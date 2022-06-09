@@ -9,7 +9,6 @@ class LoginController {
     const service = new LoginService();
 
     const user = await service.execute(email, password);
-    // const user = users.get(email);
 
     if (!user?.email || password !== user.password) {
       return response.status(401).json({
@@ -22,7 +21,9 @@ class LoginController {
       roles: user.role,
     });
 
+    console.log(user.rut, "dentro de session");
     return response.json({
+      rut: user.rut,
       name: user.name,
       lastName: user.lastName,
       token,
