@@ -2,8 +2,11 @@ import prismaClient from "../../prisma";
 
 class ListNutritionistService {
   async execute() {
-    const list = prismaClient.nutritionist.findMany();
-
+    const list = await prismaClient.nutritionist.findMany({
+      include: {
+        client: true,
+      },
+    });
     return list;
   }
 }

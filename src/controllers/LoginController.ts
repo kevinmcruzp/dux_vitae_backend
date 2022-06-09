@@ -21,7 +21,6 @@ class LoginController {
       roles: user.role,
     });
 
-    console.log(user.rut, "dentro de session");
     return response.json({
       rut: user.rut,
       name: user.name,

@@ -15,10 +15,3 @@ export async function checkRefreshTokenIsValid(
   const userRefreshToken = await service.execute(email);
   return userRefreshToken === refreshToken;
 }
-
-// //Areglar el check de refresh token
-// export function checkRefreshTokenIsValid(email: string, refreshToken: string) {
-//   const storedRefreshTokens = tokens.get(email) ?? [];
-
-//   return storedRefreshTokens.some((token) => token === refreshToken);
-// }

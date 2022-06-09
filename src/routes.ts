@@ -31,7 +31,10 @@ router.put("/nutritionists/:rut", new UpdateNutritionistController().handle);
 router.delete("/nutritionists/:rut", new DeleteNutritionistController().handle);
 router.get("/nutritionists/:rut", new ListNutritionistByRutController().handle);
 
-//posicionar en controllers
+//Ruta de appointments
+router.post("/appointments");
+
+//Login
 router.post("/sessions", new LoginController().handle);
 
 //refresh token
@@ -41,6 +44,7 @@ router.post(
   new RefreshController().handle
 );
 
+//Chequea la validez del token y devuelve mis datos (A traves de los tokens)
 router.get("/me", checkAuthMiddleware, new CheckUserController().handle);
 
 export { router };

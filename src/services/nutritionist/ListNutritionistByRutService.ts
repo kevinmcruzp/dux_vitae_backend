@@ -2,13 +2,16 @@ import prismaClient from "../../prisma";
 
 class ListNutritionistByRutService {
   async execute(rut: string) {
-    const cliente = await prismaClient.nutritionist.findUnique({
+    const nutritionist = await prismaClient.nutritionist.findUnique({
       where: {
         rut,
       },
+      include: {
+        client: true,
+      },
     });
 
-    return cliente;
+    return nutritionist;
   }
 }
 

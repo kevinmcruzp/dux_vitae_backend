@@ -5,7 +5,6 @@ import { checkRefreshTokenIsValid } from "./TokenController";
 
 class RefreshController {
   async handle(request: Request, response: Response) {
-    console.log("dentro de refreshhhh");
     const email = request.user;
     const { refreshToken } = request.body;
 
