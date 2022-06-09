@@ -22,6 +22,7 @@ model Client {
   updated_at   DateTime       @updatedAt
   chat         Chat[]
   nutritionist Nutritionist[]
+  appointment  Appointment?
 
   @@map("clients")
 }
@@ -99,6 +100,8 @@ model Appointment {
   updated_at      DateTime     @updatedAt
   nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
   nutritionistRut String
+  client          Client       @relation(fields: [clientRut], references: [rut])
+  clientRut       String       @unique
 
   @@map("appointments")
 }
