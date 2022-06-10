@@ -21,8 +21,8 @@ model Client {
   created_at   DateTime       @default(now())
   updated_at   DateTime       @updatedAt
   chat         Chat[]
+  appointment  Appointment[]
   nutritionist Nutritionist[]
-  appointment  Appointment?
 
   @@map("clients")
 }
