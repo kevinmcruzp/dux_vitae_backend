@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { CreateAppointmentController } from "./controllers/appointment/CreateAppointmentController";
+import { DeleteAppointmentController } from "./controllers/appointment/DeleteAppointmentController";
 import { ListAppointmentByRutController } from "./controllers/appointment/ListAppointmentByRutController";
+import { UpdateAppointmentController } from "./controllers/appointment/UpdateAppointmentController";
 import { CheckUserController } from "./controllers/CheckUserController";
 import { CreateClientController } from "./controllers/client/CreateClientController";
 import { DeleteClientController } from "./controllers/client/DeleteClientController";
@@ -36,6 +38,8 @@ router.get("/nutritionists/:rut", new ListNutritionistByRutController().handle);
 //Ruta de appointments
 router.post("/appointments", new CreateAppointmentController().handle);
 router.get("/appointments/:rut", new ListAppointmentByRutController().handle);
+router.put("/appointments/:id", new UpdateAppointmentController().handle);
+router.delete("/appointments/:id", new DeleteAppointmentController().handle);
 
 //Login
 router.post("/sessions", new LoginController().handle);
