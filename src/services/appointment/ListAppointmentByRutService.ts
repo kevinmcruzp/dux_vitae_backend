@@ -19,6 +19,9 @@ class ListAppointmentByRutService {
         where: {
           nutritionistRut: rut,
         },
+        include: {
+          client: true,
+        },
       });
 
       return appointment;
@@ -28,6 +31,9 @@ class ListAppointmentByRutService {
       let appointment = await prismaClient.appointment.findFirst({
         where: {
           clientRut: rut,
+        },
+        include: {
+          nutritionist: true,
         },
       });
 

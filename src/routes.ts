@@ -26,7 +26,7 @@ router.post("/clients", new CreateClientController().handle);
 router.get("/clients", new ListClientController().handle);
 router.put("/clients/:rut", new UpdateClientController().handle);
 router.delete("/clients/:rut", new DeleteClientController().handle);
-router.get("/clients:rut", new ListClientByRutController().handle);
+router.get("/clients/:rut", new ListClientByRutController().handle);
 
 //Ruta nutricionista
 router.post("/nutritionists", new CreateNutritionistController().handle);
