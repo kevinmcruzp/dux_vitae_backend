@@ -45,15 +45,27 @@ model Nutritionist {
 }
 
 model Chat {
-  idMessage       String       @id @default(cuid())
-  message         String
+  idChat          String       @id @default(cuid())
+  room            String       @unique
+  Message         Message[]
   created_at      DateTime     @default(now())
   nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
-  client          Client       @relation(fields: [clientRut], references: [rut])
   nutritionistRut String
+  client          Client       @relation(fields: [clientRut], references: [rut])
   clientRut       String
 
   @@map("chats")
+}
+
+model Message {
+  idMessage  String   @id @default(cuid())
+  name       String
+  text       String
+  message    Chat     @relation(fields: [idChat], references: [idChat])
+  idChat     String
+  created_at DateTime @default(now())
+
+  @@map("messages")
 }
 
 model Admin {
