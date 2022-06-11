@@ -1,4 +1,15 @@
 import { io } from "../http";
+import { AddNewMessageChatService } from "../services/chat/AddNewMessageChatService";
+import { CreateChatService } from "../services/chat/CreateChatService";
+import { SearchChatService } from "../services/chat/SearchChatService";
+
+interface IMsg {
+  room: string;
+  name: string;
+  message: string;
+  nutritionistRut: string;
+  clientRut: string;
+}
 
 type RoomUser = {
   socket_id: string;
@@ -7,10 +18,11 @@ type RoomUser = {
 };
 
 type Message = {
+  nutritionistRut: string;
+  clientRut: string;
   room: string;
   name: string;
   text: string;
-  createdAt: Date;
 };
 
 const users: RoomUser[] = [];
@@ -37,29 +49,40 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("message", (data) => {
-    //1.- Almacenar mensaje en la base de datos
-
-    //2.- Enviar mensaje a todos los usuarios de la sala
-
+  socket.on("message", async (data: IMsg) => {
     const message: Message = {
+      nutritionistRut: data.nutritionistRut,
+      clientRut: data.clientRut,
       room: data.room,
       name: data.name,
       text: data.message,
-      createdAt: new Date(),
     };
+
+    //Buscar si existe un chat para esta sala
+    const serviceSearchChat = new SearchChatService();
+    const responseMessages = await serviceSearchChat.execute(data.room);
+    console.log(responseMessages, "responseMessages");
+
+    if (!responseMessages) {
+      //1.- Crear chat y almacenar mensaje en la base de datos
+      const serviceCreateChat = new CreateChatService();
+      const responseCreate = await serviceCreateChat.execute(message);
+    } else {
+      //2.- Almacenar mensaje en la base de datos
+      const serviceAddNewMessage = new AddNewMessageChatService();
+
+      const responseNewMessage = await serviceAddNewMessage.execute({
+        name: data.name,
+        text: data.message,
+        idChat: responseMessages.idChat,
+      });
+    }
 
     messages.push(message);
 
-    console.log(messages);
-
+    //2.- Enviar mensaje a todos los usuarios de la sala
     io.to(data.room).emit("message", messages);
 
     // socket.emit("received", name, message);
   });
-
-  // //mesanges privados
-  // socket.on("private message", (anotherSocketId, msg) => {
-  //   socket.to(anotherSocketId).emit("private message", socket.id, msg);
-  // });
 });
