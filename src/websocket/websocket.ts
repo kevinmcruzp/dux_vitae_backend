@@ -61,7 +61,6 @@ io.on("connection", (socket) => {
     //Buscar si existe un chat para esta sala
     const serviceSearchChat = new SearchChatService();
     const responseMessages = await serviceSearchChat.execute(data.room);
-    console.log(responseMessages, "responseMessages");
 
     if (!responseMessages) {
       //1.- Crear chat y almacenar mensaje en la base de datos
@@ -78,10 +77,9 @@ io.on("connection", (socket) => {
       });
     }
 
-    messages.push(message);
+    io.to(data.room).emit("message", message);
 
     //2.- Enviar mensaje a todos los usuarios de la sala
-    io.to(data.room).emit("message", messages);
 
     // socket.emit("received", name, message);
   });

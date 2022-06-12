@@ -7,6 +7,9 @@ class SearchChatService {
         where: {
           room,
         },
+        include: {
+          Message: true,
+        },
       });
 
       return messages;
