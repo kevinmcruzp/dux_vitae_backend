@@ -28,7 +28,7 @@ class ListAppointmentByRutService {
     }
 
     if (client) {
-      let appointment = await prismaClient.appointment.findFirst({
+      let appointment = await prismaClient.appointment.findMany({
         where: {
           clientRut: rut,
         },
