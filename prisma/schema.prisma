@@ -114,7 +114,7 @@ model Appointment {
   nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
   nutritionistRut String
   client          Client       @relation(fields: [clientRut], references: [rut])
-  clientRut       String       @unique
+  clientRut       String
 
   @@map("appointments")
 }
