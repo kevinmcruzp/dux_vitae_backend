@@ -27,8 +27,6 @@ type Message = {
 
 const users: RoomUser[] = [];
 
-const messages: Message[] = [];
-
 io.on("connection", (socket) => {
   socket.on("room", (room, name) => {
     //Para entrar en una sala
@@ -62,22 +60,36 @@ io.on("connection", (socket) => {
     const serviceSearchChat = new SearchChatService();
     const responseMessages = await serviceSearchChat.execute(data.room);
 
+    let responseCurrentlyChat = undefined;
+
     if (!responseMessages) {
       //1.- Crear chat y almacenar mensaje en la base de datos
       const serviceCreateChat = new CreateChatService();
-      const responseCreate = await serviceCreateChat.execute(message);
+      responseCurrentlyChat = await serviceCreateChat.execute(message);
     } else {
       //2.- Almacenar mensaje en la base de datos
       const serviceAddNewMessage = new AddNewMessageChatService();
 
-      const responseNewMessage = await serviceAddNewMessage.execute({
+      responseCurrentlyChat = await serviceAddNewMessage.execute({
         name: data.name,
         text: data.message,
         idChat: responseMessages.idChat,
       });
     }
 
-    io.to(data.room).emit("message", message);
+    console.log(responseCurrentlyChat, "Lmao");
+
+    const currentlyMessage = {
+      nutritionistRut: data.nutritionistRut,
+      clientRut: data.clientRut,
+      room: data.room,
+      name: data.name,
+      text: data.message,
+      created_at: responseCurrentlyChat?.created_at,
+    };
+    console.log(currentlyMessage);
+
+    io.to(data.room).emit("message", currentlyMessage);
 
     //2.- Enviar mensaje a todos los usuarios de la sala
 
