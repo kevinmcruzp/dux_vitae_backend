@@ -58,12 +58,13 @@ model Chat {
 }
 
 model Message {
-  idMessage  String   @id @default(cuid())
-  name       String
-  text       String
-  message    Chat     @relation(fields: [idChat], references: [idChat])
-  idChat     String
-  created_at DateTime @default(now())
+  idMessage       String   @id @default(cuid())
+  rutOwnerMessage String
+  name            String
+  text            String
+  message         Chat     @relation(fields: [idChat], references: [idChat])
+  idChat          String
+  created_at      DateTime @default(now())
 
   @@map("messages")
 }
