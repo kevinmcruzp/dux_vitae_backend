@@ -9,6 +9,7 @@ interface IMsg {
   message: string;
   nutritionistRut: string;
   clientRut: string;
+  rutOwnerMessage: string;
 }
 
 type RoomUser = {
@@ -23,6 +24,7 @@ type Message = {
   room: string;
   name: string;
   text: string;
+  rutOwnerMessage: string;
 };
 
 const users: RoomUser[] = [];
@@ -54,6 +56,7 @@ io.on("connection", (socket) => {
       room: data.room,
       name: data.name,
       text: data.message,
+      rutOwnerMessage: data.rutOwnerMessage,
     };
 
     //Buscar si existe un chat para esta sala
@@ -74,10 +77,9 @@ io.on("connection", (socket) => {
         name: data.name,
         text: data.message,
         idChat: responseMessages.idChat,
+        rutOwnerMessage: data.rutOwnerMessage,
       });
     }
-
-    console.log(responseCurrentlyChat, "Lmao");
 
     const currentlyMessage = {
       nutritionistRut: data.nutritionistRut,
@@ -86,8 +88,8 @@ io.on("connection", (socket) => {
       name: data.name,
       text: data.message,
       created_at: responseCurrentlyChat?.created_at,
+      rutOwnerMessage: data.rutOwnerMessage,
     };
-    console.log(currentlyMessage);
 
     io.to(data.room).emit("message", currentlyMessage);
 

@@ -6,6 +6,7 @@ type Message = {
   name: string;
   nutritionistRut: string;
   clientRut: string;
+  rutOwnerMessage: string;
 };
 
 class CreateChatService {
@@ -17,6 +18,7 @@ class CreateChatService {
           create: {
             name: data.name,
             text: data.text,
+            rutOwnerMessage: data.rutOwnerMessage,
           },
         },
         nutritionistRut: data.nutritionistRut,
