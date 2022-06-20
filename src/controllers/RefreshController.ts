@@ -30,8 +30,6 @@ class RefreshController {
       refreshToken
     );
 
-    console.log(isValidRefreshToken, "dentro del checkRefreshTokenIsValid");
-
     if (!isValidRefreshToken) {
       return response
         .status(401)
@@ -39,13 +37,10 @@ class RefreshController {
     }
 
     // invalidateRefreshToken(email, refreshToken);
-    console.log("cerca de generate jwt");
     const { token, refreshToken: newRefreshToken } =
       await generateJwtAndRefreshToken(email, {
         roles: user.role,
       });
-
-    console.log(token, "token", newRefreshToken, "newRefreshToken");
 
     return response.json({
       token,
