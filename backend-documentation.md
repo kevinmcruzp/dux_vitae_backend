@@ -77,3 +77,5 @@ Para ejecutar el backend se debe de ejecutar el comando:
 ### Funcionalidades de forma específica:
 
 ### Flujo de la aplicación
+
+![flujoApp](https://user-images.githubusercontent.com/72741197/174669547-7e717bf3-cdbd-4d56-bee8-996f03414702.png)
