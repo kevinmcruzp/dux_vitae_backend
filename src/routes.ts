@@ -17,10 +17,22 @@ import { ListNutritionistByRutController } from "./controllers/nutritionist/List
 import { ListNutritionistController } from "./controllers/nutritionist/ListNutritionistController";
 import { UpdateNutritionistController } from "./controllers/nutritionist/UpdateNutritionistController";
 import { RefreshController } from "./controllers/RefreshController";
+import { UploadCertificateController } from "./controllers/upload/UploadCertificateController";
 import { addUserInformationToRequest } from "./middleware/addUserInformationToRequest";
 import { checkAuthMiddleware } from "./middleware/checkAuthMiddleware";
 
+import multer from "multer";
+
 const router = Router();
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: "./certificateUploads",
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now();
+      cb(null, file.originalname + "-" + uniqueSuffix);
+    },
+  }),
+});
 
 //Ruta Clientes
 router.post("/clients", new CreateClientController().handle);
@@ -41,6 +53,13 @@ router.post("/appointments", new CreateAppointmentController().handle);
 router.get("/appointments/:rut", new ListAppointmentByRutController().handle);
 router.put("/appointments/:id", new UpdateAppointmentController().handle);
 router.delete("/appointments/:id", new DeleteAppointmentController().handle);
+
+//Ruta de files
+router.post(
+  "/certificate",
+  upload.single("file"),
+  new UploadCertificateController().handle
+);
 
 //Ruta de chat
 router.get("/chat/:room", new SearchChatController().handle);
