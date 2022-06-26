@@ -3,6 +3,7 @@ import { CreateAppointmentController } from "./controllers/appointment/CreateApp
 import { DeleteAppointmentController } from "./controllers/appointment/DeleteAppointmentController";
 import { ListAppointmentByRutController } from "./controllers/appointment/ListAppointmentByRutController";
 import { UpdateAppointmentController } from "./controllers/appointment/UpdateAppointmentController";
+import { UploadCertificateController } from "./controllers/certificate/UploadCertificateController";
 import { SearchChatController } from "./controllers/chat/SearchChatController";
 import { CheckUserController } from "./controllers/CheckUserController";
 import { CreateClientController } from "./controllers/client/CreateClientController";
@@ -17,12 +18,12 @@ import { ListNutritionistByRutController } from "./controllers/nutritionist/List
 import { ListNutritionistController } from "./controllers/nutritionist/ListNutritionistController";
 import { UpdateNutritionistController } from "./controllers/nutritionist/UpdateNutritionistController";
 import { RefreshController } from "./controllers/RefreshController";
-import { UploadCertificateController } from "./controllers/upload/UploadCertificateController";
 import { addUserInformationToRequest } from "./middleware/addUserInformationToRequest";
 import { checkAuthMiddleware } from "./middleware/checkAuthMiddleware";
 
 import multer from "multer";
-import { DownloadCertificateController } from "./controllers/upload/DownloadCertificateController";
+import { DownloadCertificateController } from "./controllers/certificate/DownloadCertificateController";
+import { ListCertificateController } from "./controllers/certificate/ListCertificateController";
 
 const router = Router();
 const upload = multer({
@@ -61,7 +62,8 @@ router.post(
   upload.single("file"),
   new UploadCertificateController().handle
 );
-router.get("/certificate", new DownloadCertificateController().handle);
+router.get("/certificate/:file", new DownloadCertificateController().handle);
+router.get("/certificate", new ListCertificateController().handle);
 
 //Ruta de chat
 router.get("/chat/:room", new SearchChatController().handle);
