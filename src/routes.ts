@@ -22,6 +22,7 @@ import { addUserInformationToRequest } from "./middleware/addUserInformationToRe
 import { checkAuthMiddleware } from "./middleware/checkAuthMiddleware";
 
 import multer from "multer";
+import { DownloadCertificateController } from "./controllers/upload/DownloadCertificateController";
 
 const router = Router();
 const upload = multer({
@@ -60,6 +61,7 @@ router.post(
   upload.single("file"),
   new UploadCertificateController().handle
 );
+router.get("/certificate", new DownloadCertificateController().handle);
 
 //Ruta de chat
 router.get("/chat/:room", new SearchChatController().handle);
