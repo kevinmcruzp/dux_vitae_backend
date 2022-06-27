@@ -14,6 +14,9 @@ class LoginService {
         email,
         password,
       },
+      include: {
+        certificate: true,
+      },
     });
 
     const admin = await prismaClient.admin.findFirst({

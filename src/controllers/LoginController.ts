@@ -8,12 +8,19 @@ class LoginController {
     const { email, password } = request.body as CreateSessionDTO;
     const service = new LoginService();
 
-    const user = await service.execute(email, password);
+    const user: any = await service.execute(email, password);
 
     if (!user?.email || password !== user.password) {
       return response.status(401).json({
         error: true,
         message: "E-mail or password incorrect.",
+      });
+    }
+
+    if (user.role === "nutritionist" && user.certificate?.state === false) {
+      return response.status(401).json({
+        error: true,
+        message: "Nutritionist not approved.",
       });
     }
 
