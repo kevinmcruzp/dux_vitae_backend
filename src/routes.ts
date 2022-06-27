@@ -24,6 +24,7 @@ import { checkAuthMiddleware } from "./middleware/checkAuthMiddleware";
 import multer from "multer";
 import { DownloadCertificateController } from "./controllers/certificate/DownloadCertificateController";
 import { ListCertificateController } from "./controllers/certificate/ListCertificateController";
+import { UpdateStateCertificateByIdController } from "./controllers/certificate/UpdateStateCertificateByIdController";
 
 const router = Router();
 const upload = multer({
@@ -56,7 +57,7 @@ router.get("/appointments/:rut", new ListAppointmentByRutController().handle);
 router.put("/appointments/:id", new UpdateAppointmentController().handle);
 router.delete("/appointments/:id", new DeleteAppointmentController().handle);
 
-//Ruta de files
+//Ruta de certificates
 router.post(
   "/certificate",
   upload.single("file"),
@@ -64,6 +65,10 @@ router.post(
 );
 router.get("/certificate/:file", new DownloadCertificateController().handle);
 router.get("/certificate", new ListCertificateController().handle);
+router.put(
+  "/certificate/:id",
+  new UpdateStateCertificateByIdController().handle
+);
 
 //Ruta de chat
 router.get("/chat/:room", new SearchChatController().handle);
