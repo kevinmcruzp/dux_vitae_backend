@@ -5,6 +5,7 @@ class ListNutritionistService {
     const list = await prismaClient.nutritionist.findMany({
       include: {
         client: true,
+        certificate: true,
       },
     });
     return list;
