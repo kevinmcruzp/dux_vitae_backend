@@ -25,11 +25,23 @@ import multer from "multer";
 import { DownloadCertificateController } from "./controllers/certificate/DownloadCertificateController";
 import { ListCertificateController } from "./controllers/certificate/ListCertificateController";
 import { UpdateStateCertificateByIdController } from "./controllers/certificate/UpdateStateCertificateByIdController";
+import { CreateFileController } from "./controllers/file/CreateFileController";
+import { UploadFileController } from "./controllers/file/UploadFilesController";
 
 const router = Router();
-const upload = multer({
+const uploadCertificate = multer({
   storage: multer.diskStorage({
     destination: "./certificateUploads",
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now();
+      cb(null, file.originalname + "-" + uniqueSuffix);
+    },
+  }),
+});
+
+const uploadFiles = multer({
+  storage: multer.diskStorage({
+    destination: "./minuteUploads",
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now();
       cb(null, file.originalname + "-" + uniqueSuffix);
@@ -60,7 +72,7 @@ router.delete("/appointments/:id", new DeleteAppointmentController().handle);
 //Ruta de certificates
 router.post(
   "/certificate",
-  upload.single("file"),
+  uploadCertificate.single("file"),
   new UploadCertificateController().handle
 );
 router.get("/certificate/:file", new DownloadCertificateController().handle);
@@ -72,6 +84,14 @@ router.put(
 
 //Ruta de chat
 router.get("/chat/:room", new SearchChatController().handle);
+
+//Ruta de Files
+router.post(
+  "/files",
+  uploadFiles.single("file"),
+  new UploadFileController().handle
+);
+router.post("/file", new CreateFileController().handle);
 
 //Login
 router.post("/sessions", new LoginController().handle);
