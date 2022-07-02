@@ -26,6 +26,8 @@ import { DownloadCertificateController } from "./controllers/certificate/Downloa
 import { ListCertificateController } from "./controllers/certificate/ListCertificateController";
 import { UpdateStateCertificateByIdController } from "./controllers/certificate/UpdateStateCertificateByIdController";
 import { CreateFileController } from "./controllers/file/CreateFileController";
+import { DownloadFileController } from "./controllers/file/DownloadFileController";
+import { ListFileByRutController } from "./controllers/file/ListFileByRutController";
 import { UploadFileController } from "./controllers/file/UploadFilesController";
 
 const router = Router();
@@ -92,6 +94,8 @@ router.post(
   new UploadFileController().handle
 );
 router.post("/file", new CreateFileController().handle);
+router.get("/files/:rut", new ListFileByRutController().handle);
+router.get("/file/:file", new DownloadFileController().handle);
 
 //Login
 router.post("/sessions", new LoginController().handle);
