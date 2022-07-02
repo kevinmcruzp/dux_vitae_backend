@@ -24,6 +24,7 @@ model Client {
   appointment  Appointment[]
   nutritionist Nutritionist[]
 
+  Minute File[]
   @@map("clients")
 }
 
@@ -41,6 +42,7 @@ model Nutritionist {
   certificate Certificate?
   client      Client[]
 
+  Minute File[]
   @@map("nutritionists")
 }
 
@@ -95,6 +97,20 @@ model Certificate {
   nutritionistRut String       @unique
 
   @@map("certificates")
+}
+
+model File {
+  idFile          String       @id @default(uuid())
+  filename        String
+  originalname    String
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+  client          Client       @relation(fields: [clientRut], references: [rut])
+  clientRut       String
+  nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])
+  nutritionistRut String
+
+  @@map("files")
 }
 
 // model Schedule {
