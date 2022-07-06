@@ -5,12 +5,13 @@ type UpdateNutritionistProps = {
   lastName: string;
   email: string;
   password: string;
+  nameCategory: string;
 };
 
 class UpdateNutritionistService {
   async execute(
     rut: string,
-    { name, lastName, email, password }: UpdateNutritionistProps
+    { name, lastName, email, password, nameCategory }: UpdateNutritionistProps
   ) {
     const nutritionist = prismaClient.nutritionist.update({
       where: {
@@ -21,6 +22,11 @@ class UpdateNutritionistService {
         lastName,
         email,
         password,
+        category: {
+          create: {
+            name: nameCategory,
+          },
+        },
       },
     });
 
