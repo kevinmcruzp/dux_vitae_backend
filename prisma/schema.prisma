@@ -17,6 +17,10 @@ model Client {
   name         String
   lastName     String
   password     String
+  birthday     String?
+  gender       String?
+  phone        String?
+  description  String?
   role         String
   created_at   DateTime       @default(now())
   updated_at   DateTime       @updatedAt
@@ -34,6 +38,11 @@ model Nutritionist {
   name        String
   lastName    String
   password    String
+  birthday    String?
+  gender      String?
+  phone       String?
+  description String?
+  category    String?
   role        String
   created_at  DateTime      @default(now())
   updated_at  DateTime      @updatedAt
@@ -42,7 +51,6 @@ model Nutritionist {
   certificate Certificate?
   client      Client[]
   Minute      File[]
-  category    Category[]
 
   @@map("nutritionists")
 }
@@ -82,6 +90,7 @@ model Admin {
   created_at  DateTime      @default(now())
   updated_at  DateTime      @updatedAt
   certificate Certificate[]
+  Category    Category[]
 
   @@map("admins")
 }
@@ -147,11 +156,12 @@ model Token {
 }
 
 model Category {
-  idCategory   String         @id @default(uuid())
-  name         String
-  created_at   DateTime       @default(now())
-  updated_at   DateTime       @updatedAt
-  nutritionist Nutritionist[]
+  idCategory String   @id @default(uuid())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  admin      Admin    @relation(fields: [adminRut], references: [rut])
+  adminRut   String
 
   @@map("categories")
 }
