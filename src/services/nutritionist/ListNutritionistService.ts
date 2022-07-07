@@ -6,7 +6,6 @@ class ListNutritionistService {
       include: {
         client: true,
         certificate: true,
-        category: true,
       },
     });
     return list;

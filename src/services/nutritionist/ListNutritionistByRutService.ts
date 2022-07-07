@@ -8,7 +8,6 @@ class ListNutritionistByRutService {
       },
       include: {
         client: true,
-        category: true,
       },
     });
 
