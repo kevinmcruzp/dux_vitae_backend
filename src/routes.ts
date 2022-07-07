@@ -22,6 +22,7 @@ import { addUserInformationToRequest } from "./middleware/addUserInformationToRe
 import { checkAuthMiddleware } from "./middleware/checkAuthMiddleware";
 
 import multer from "multer";
+import { ListCategoryController } from "./controllers/category/ListCategoryController";
 import { DownloadCertificateController } from "./controllers/certificate/DownloadCertificateController";
 import { ListCertificateController } from "./controllers/certificate/ListCertificateController";
 import { UpdateStateCertificateByIdController } from "./controllers/certificate/UpdateStateCertificateByIdController";
@@ -86,6 +87,9 @@ router.put(
 
 //Ruta de chat
 router.get("/chat/:room", new SearchChatController().handle);
+
+//Ruta de Categories
+router.get("/categories", new ListCategoryController().handle);
 
 //Ruta de Files
 router.post(
