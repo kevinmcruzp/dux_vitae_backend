@@ -4,15 +4,19 @@ import { UpdateNutritionistService } from "../../services/nutritionist/UpdateNut
 class UpdateNutritionistController {
   async handle(request: Request, response: Response) {
     const { rut } = request.params;
-    const { name, lastname, email, password } = request.body;
+    const { name, lastName, birthday, gender, phone, category, description } =
+      request.body;
 
     const service = new UpdateNutritionistService();
 
     const nutritionist = await service.execute(rut, {
       name,
-      lastname,
-      email,
-      password,
+      lastName,
+      birthday,
+      gender,
+      phone,
+      category,
+      description,
     });
 
     return response.json(nutritionist);
