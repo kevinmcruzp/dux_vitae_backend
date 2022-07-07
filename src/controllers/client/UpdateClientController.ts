@@ -4,18 +4,20 @@ import { UpdateClientService } from "../../services/client/UpdateClientService";
 class UpdateClientController {
   async handle(request: Request, response: Response) {
     const { rut } = request.params;
-    const { name, lastname, email, password } = request.body;
-    console.log(rut);
+    const { name, lastName, birthday, gender, phone, description } =
+      request.body;
     const service = new UpdateClientService();
 
     const client = await service.execute(rut, {
       name,
-      lastname,
-      email,
-      password,
+      lastName,
+      birthday,
+      gender,
+      phone,
+      description,
     });
 
-    return response.status(200).json(client);
+    return response.json(client);
   }
 }
 
