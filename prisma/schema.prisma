@@ -14,9 +14,9 @@ generator client {
 model Client {
   rut          String         @id
   email        String         @unique
+  password     String ///  @encrypted
   name         String
   lastName     String
-  password     String
   birthday     String?
   gender       String?
   phone        String?
@@ -35,9 +35,9 @@ model Client {
 model Nutritionist {
   rut         String        @id
   email       String        @unique
+  password    String /// @encrypted
   name        String
   lastName    String
-  password    String
   birthday    String?
   gender      String?
   phone       String?
@@ -123,19 +123,11 @@ model File {
   @@map("files")
 }
 
-// model Schedule {
-//   idSchedule String   @id @default(uuid())
-//   message    String
-//   date       DateTime
-//   created_at DateTime @default(now())
-//   updated_at DateTime @updatedAt
-// }
-
 model Appointment {
   idAppointment   String       @id @default(uuid())
   title           String
   description     String
-  state           Boolean
+  state           Boolean?
   created_at      DateTime     @default(now())
   updated_at      DateTime     @updatedAt
   nutritionist    Nutritionist @relation(fields: [nutritionistRut], references: [rut])

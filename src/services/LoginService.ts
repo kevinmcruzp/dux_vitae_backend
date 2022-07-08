@@ -5,14 +5,12 @@ class LoginService {
     const client = await prismaClient.client.findFirst({
       where: {
         email,
-        password,
       },
     });
 
     const nutritionist = await prismaClient.nutritionist.findFirst({
       where: {
         email,
-        password,
       },
       include: {
         certificate: true,
@@ -22,19 +20,18 @@ class LoginService {
     const admin = await prismaClient.admin.findFirst({
       where: {
         email,
-        password,
       },
     });
 
-    if (admin !== null) {
+    if (admin !== null && password === admin.password) {
       return admin;
     }
 
-    if (nutritionist !== null) {
+    if (nutritionist !== null && password === nutritionist.password) {
       return nutritionist;
     }
 
-    if (client !== null) {
+    if (client !== null && password === client.password) {
       return client;
     }
     return null;
