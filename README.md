@@ -18,6 +18,14 @@ Ahora debes de entrar al directorio del proyecto y bajar las dependencias que se
     npm install
 ```
 
+Generar el Prisma Client:
+
+```
+    yarn prisma generate
+    o
+    prisma generate
+```
+
 Para ejecutar el backend se debe de ejecutar el comando:
 
 ```
@@ -26,7 +34,7 @@ Para ejecutar el backend se debe de ejecutar el comando:
     npm run dev
 ```
 
-Para ver las tablas de la base de datos se debe de ejecutar el comando:
+Para ver o gerenciar las tablas de la base de datos se debe de ejecutar el comando:
 
 ```
     npx prisma studio
