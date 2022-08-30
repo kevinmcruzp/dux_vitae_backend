@@ -1,27 +1,13 @@
----
-title: "Documentación de las funcionalidades y métodos backend"
-date: 2022-06-19 11:52
-categories:
-  - Documentación
-tags:
-  - Routes
-  - Controllers
-  - Services
-  - Websocket
-  - JWT
-  - Token
----
-
 # **Documentación de las funcionalidades y métodos del backend**
 
 ## **Empezando**
 
-Primero, clonas el repositório de GitHub
+Primero, clonas el repositório de GitHub (Link del repositório FronEnd: https://github.com/KevinMCruzP/dux_vitae_frontend)
 
 Ejemplo utilizando SSH:
 
 ```
-    git clone git@github.com:The-noobs-programmers/dux_vitae_backend.git
+    git clone git@github.com:KevinMCruzP/dux_vitae_backend.git
 ```
 
 Ahora debes de entrar al directorio del proyecto y bajar las dependencias que se encuentran en el archivo package.json:
